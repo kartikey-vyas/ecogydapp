@@ -16,7 +16,7 @@ contract EcogyOracle is usingOraclize {
     }
     
     function __callback(bytes32 queryId, string memory result) public {
-        if(msg.sender != oraclize_cbAddress()) revert();
+        if(msg.sender != oraclize_cbAddress()) revert("callback received from incorrect address");
         wattHours = parseInt(result);
         emit NewWattHours(result);
         earningpershare = rate * wattHours;
