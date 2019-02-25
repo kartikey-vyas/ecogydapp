@@ -1,0 +1,27 @@
+{
+  "name": "ecogydapp",
+  "version": "1.0.0",
+  "description": "final implementation of ecogy decentralised investment platform",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kartikey-vyas/ecogydapp.git"
+  },
+  "author": "Kartikey Vyas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kartikey-vyas/ecogydapp/issues"
+  },
+  "homepage": "https://github.com/kartikey-vyas/ecogydapp#readme",
+  "dependencies": {
+    "lite-server": "^2.4.0",
+    "truffle-contract": "^4.0.6",
+    "truffle-hdwallet-provider": "^1.0.4"
+  }
+}
