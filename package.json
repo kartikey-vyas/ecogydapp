@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "dev": "lite-server",
+    "server": "lite-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,7 +24,6 @@
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "chai-bignumber": "^3.0.0",
-    "lite-server": "^2.4.0",
     "nodemon": "^1.18.10",
     "truffle-contract": "^4.0.6",
     "truffle-hdwallet-provider": "^1.0.4"
