@@ -1,11 +1,14 @@
 # Ecogy Dapp
 core Dependencies:
+
     Truffle v5.0.5
     Solidity v0.5.0
     Node v10.15.1
 
 command to install npm dependencies properly:
+    
     sudo npm install *package* --unsafe-perm=true --allow-root
+    
 This was required for web3 and a few other packages (node-gyp reuild error)
 
 As of Tuesday, 26 February 2019, the final version of the Ecogy Dapp code will be backed up here. The original repository for all the code used in development can be found at:
