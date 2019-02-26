@@ -33,13 +33,14 @@ Description and user guide coming soon...
 useful repo to model this project on: https://github.com/shawntabrizi/Ethereum-Twitter-Bounty
 
 #### Free Test Ether
+##### Restore account when installing metamask using these details
 metamask seed phrase: 
 
     rose essence remain logic confirm toast chunk twist space fragile body hip
 
-metamask ropsten testnet account address:
+metamask ropsten testnet account details:
 
-    0x4e2da50a65a4a2d68a898df0c6c94dd8c92348e1
+    address: 0x4e2da50a65a4a2d68a898df0c6c94dd8c92348e1
     private key: a55428ae7da1352934a3f1c7a93e0cc37f8c45860ce3a00ba1d3855913e8a770
 
 
