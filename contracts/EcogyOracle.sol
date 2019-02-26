@@ -1,6 +1,6 @@
 pragma solidity ^0.5.0;
 
-import "./Oraclize.sol";
+import "./usingOraclize.sol";
 
 contract EcogyOracle is usingOraclize {
     uint public wattHours;

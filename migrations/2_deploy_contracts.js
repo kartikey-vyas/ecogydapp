@@ -1,11 +1,11 @@
 var SafeMath = artifacts.require("./SafeMath.sol");
-var Oraclize = artifacts.require("./Oraclize.sol");
+var usingOraclize = artifacts.require("./usingOraclize.sol");
 var EcogyOracle = artifacts.require("./EcogyOracle.sol");
 var Ecogy = artifacts.require("./Ecogy.sol");
 
 module.exports = function (deployer) {
   deployer.deploy(SafeMath);
-  deployer.deploy(Oraclize);
+  deployer.deploy(usingOraclize);
   deployer.deploy(EcogyOracle);
   deployer.deploy(Ecogy);
 };
