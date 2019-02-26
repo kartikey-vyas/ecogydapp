@@ -1,0 +1,23 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,600");
+
+body {
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+}
+
+.title {
+  margin: 10px auto;
+}
+
+.container {
+  margin: 40px auto auto auto;
+}
+
+.row {
+  margin: 40px auto auto auto;
+}
+
+.solar {
+  width: 30%;
+  margin: auto auto;
+}
