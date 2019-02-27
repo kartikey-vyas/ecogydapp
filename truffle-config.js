@@ -23,7 +23,7 @@ const infuraKey = "5069e0c4d49c40c9a957aaf58d85ef6b";
 //
 // const fs = require('fs');
 const mnemonic =
-  "steel pluck price catch december claw gossip auction blossom actor around cost";
+  "rose essence remain logic confirm toast chunk twist space fragile body hip";
 
 module.exports = {
   /**
