@@ -7,9 +7,5 @@ module.exports = function (deployer, network, accounts) {
   deployer.deploy(SafeMath);
   deployer.deploy(usingOraclize);
   deployer.deploy(EcogyOracle);
-  deployer.deploy(Ecogy, {
-    from: accounts[0],
-    gas: 6721975,
-    value: 500000000000000000
-  });
+  deployer.deploy(Ecogy);
 };

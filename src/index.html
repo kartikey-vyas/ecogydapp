@@ -31,7 +31,8 @@
     </div>
     <div class="col-2">
       <button type="button" class="btn btn-info" data-toggle="modal" data-target="#investorModal">
-        View Investments</button>
+        View Investments</button><br><br>
+      <button type="button" class="btn btn-primary">Update Solar Data</button>
     </div>
   </div>
 
@@ -45,6 +46,7 @@
           </button>
         </div>
         <div class="modal-body">
+          <p>Projects have a default number of 100 total shares</p>
           <form action="">
             <div class="form-group">
               <label for="project-id">Project Identifier</label>
@@ -105,9 +107,11 @@
             Here is a list of your investments
             <ul id="current-investments">
               <li id="investment-template" style="display: none">
-                <div class="project-id font-italic">Project 1:</div>
+                <div class="project-id font-weight-bold">Project 1:</div>
                 <span class="project-holdings">0 Shares (0 ETH) </span> <button type="button" class="btn btn-primary btn-sell"
                   data-id="0">Sell!</button>
+                <div class="font-italic">This Month's ROI</div>
+                <span class="project-roi">0 ETH</span><br><br>
               </li>
             </ul>
           </p>
@@ -130,7 +134,9 @@
                 Here are some details about this project.<br />
                 Eventually, this field will contain data retrieved from a 3rd
                 party that outlines the return on investment from the
-                project.<br /><br />
+                project.<br />
+                <strong>wattHours</strong>:
+                <span class="wattHours">00000</span><br />
                 <strong>Share Price</strong>:
                 <span class="project-price">0.1</span> Ether<br />
               </p>
@@ -176,7 +182,8 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
     crossorigin="anonymous"></script>
   <!-- include all compiled plugins (below) or include individual files as needed -->
-  <script src="vendor/truffle-contract/dist/truffle-contract.js"></script>
+  <script src="js/truffle-contract.js"></script>
+  <script src="js/web3.min.js"></script>
   <script src="js/app.js"></script>
 </body>
 

@@ -97,6 +97,7 @@ App = {
     $(document).on("click", ".btn-create", App.handleCreate);
     $(document).on("click", ".btn-delete", App.handleDelete);
     $(document).on("click", ".btn-info", App.renderInvestor);
+    $(document).on("click", ".btn-sell", App.handleSell);
   },
 
   // implement invest function upon button click
@@ -105,7 +106,7 @@ App = {
 
     // initialise required params
     let id = parseInt($(event.target).data("id"));
-    let userAccount = web3.eth.accounts[0];
+    let userAccounts = await web3.eth.getAccounts();
     let project = await App.ecogy.projectMap(id);
     let numShares = $("#" + id)
       .find(".form-control")
@@ -114,10 +115,26 @@ App = {
 
     // call solidity function
     await App.ecogy.invest(id, numShares, {
-      from: userAccount,
+      from: userAccounts[0],
       value: cost
     });
     App.updateUI(id);
+  },
+
+  // implement sellShares function upon button click
+  handleSell: async event => {
+    event.preventDefault();
+
+    // initialise required params
+    let id = parseInt($(event.target).data("id"));
+    let userAccounts = await web3.eth.getAccounts();
+    let project = await App.ecogy.projectMap(id);
+
+    await App.ecogy.sellShares(id, {
+      from: userAccounts[0]
+    });
+    $("#investorModal").modal("hide");
+    window.location.reload();
   },
 
   // implement create function upon button click
@@ -131,8 +148,11 @@ App = {
     await App.ecogy.createProject(projectId, price);
     App.updateUI(projectId);
     $("#createModal").modal("hide");
+    window.location.reload();
   },
 
+  // implement delete function upon button click
+  // NEEDS REVIEW, CAUSES ISSUES IN UI
   handleDelete: async event => {
     event.preventDefault();
     const projectId = $("#project-id-delete").val();
@@ -189,12 +209,14 @@ App = {
   },
 
   // generate projects on webpage
-  renderProjects: function (template, container, project, id) {
+  renderProjects: async function (template, container, project, id) {
     template.find(".panel-title").text(`PROJECT ${id}`);
     // price
     template
       .find(".project-price")
       .text(web3.utils.fromWei(project[2].toString()));
+    let wH = await App.ecogy.wattHours.call();
+    template.find(".wattHours").text(wH.toString())
     // available shares
     template.find(".available-shares").text(project[5]);
     // assign data-id to invest button
@@ -217,7 +239,8 @@ App = {
     template.find(".project-row").attr("id", "freebobby");
   },
 
-  renderInvestor: async id => {
+  // generate list of investments
+  renderInvestor: async () => {
     let investor = await App.ecogy.getInvestor();
     for (let i = App.lastRender; i < investor[1].length; i++) {
       let newInvestment = $("#investment-template").clone();
@@ -227,7 +250,10 @@ App = {
       let value = web3.utils.fromWei(price[2].toString()) * shares;
       newInvestment.find(".project-id").text(`Project ${project}:`);
       newInvestment.find(".project-holdings").text(`${shares} Shares (${value} ETH)`);
-      newInvestment.find(".btn-sell").attr("id", project);
+      newInvestment.find(".btn-sell").attr("data-id", project);
+      if (shares == 0) {
+        newInvestment.find(".btn-sell").attr("disabled", true);
+      }
       $("#current-investments").append(newInvestment.html());
       App.lastRender = i + 1;
     }
