@@ -1,5 +1,7 @@
+const Web3 = require("web3");
 App = {
   web3Provider: null,
+  address: "0x12847Ed25DC3174eA860CBC76ec97D29c5FbB09B",
   contracts: {},
   lastRender: 0,
   lastProject: 0,
@@ -49,16 +51,21 @@ App = {
         "Non-Ethereum browser detected. You should consider trying MetaMask!"
       );
     }
+    web3 = new Web3(new Web3.providers.WebsocketProvider("wss://ropsten.infura.io/ws/v3/5069e0c4d49c40c9a957aaf58d85ef6b"));
+    console.log("infura websocket web3 instance connected");
   },
 
   // load the contract
   initContract: async () => {
-    const ecogyArtifact = await $.getJSON("Ecogy.json");
-    App.contracts.Ecogy = TruffleContract(ecogyArtifact);
+    App.ecogyArtifact = await $.getJSON("Ecogy.json");
+    App.contracts.Ecogy = TruffleContract(App.ecogyArtifact);
     App.contracts.Ecogy.setProvider(App.web3Provider);
-
     App.ecogy = await App.contracts.Ecogy.deployed();
     console.log("Ecogy smart contract has been loaded");
+
+    App.ecogyEvents = new web3.eth.Contract(App.ecogyArtifact.abi, App.address);
+    console.log("websocket instance of contract retrieved");
+
   },
 
   // intialise web elements from data stored in contract
@@ -88,6 +95,7 @@ App = {
       }
     }
     console.log("Projects retrieved");
+    $("#loader").hide();
     return App.bindEvents();
   },
 
@@ -118,6 +126,7 @@ App = {
       from: userAccounts[0],
       value: cost
     });
+    $("#loader").show();
     App.updateUI(id);
   },
 
@@ -206,6 +215,7 @@ App = {
         id
       );
     });
+    $("#loader").hide();
   },
 
   // generate projects on webpage

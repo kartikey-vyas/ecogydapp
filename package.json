@@ -7,8 +7,10 @@
     "test": "test"
   },
   "scripts": {
+    "dev": "node_modules/.bin/webpack-dev-server --mode development --open",
     "server": "lite-server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webpack": "node_modules/.bin/webpack"
   },
   "repository": {
     "type": "git",
@@ -25,6 +27,12 @@
     "chai-as-promised": "^7.1.1",
     "chai-bignumber": "^3.0.0",
     "nodemon": "^1.18.10",
-    "truffle-hdwallet-provider": "^1.0.4"
+    "truffle-hdwallet-provider": "^1.0.4",
+    "web3": "^1.0.0-beta.46"
+  },
+  "devDependencies": {
+    "webpack": "^4.29.5",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.1"
   }
 }
