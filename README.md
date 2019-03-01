@@ -14,24 +14,11 @@ core Dependencies:
     Node v10.15.1
 
 command to install npm dependencies properly:
-    
+
     sudo npm install *package* --unsafe-perm=true --allow-root
     
 This was required for web3 and a few other packages (node-gyp reuild error)
 
-### Ecogy Contract features (processes that occur on the blockchain itself):
-    - store project data
-    - store investor data
-    - create new project (only callable by contract creator)
-    - delete project (unstable, don't use this outside of VM or local dev chain)
-    - invest in project with ether
-    - sell project shares for ether
-    - update wattHours using oraclize
-    - calculate ROI from wattHours (currently callable once a month);
-    - send ROI to investors
-
-
-useful repo to model this project on: https://github.com/shawntabrizi/Ethereum-Twitter-Bounty
 
 #### Free Test Ether
 ##### Restore account when installing metamask using these details
@@ -46,3 +33,31 @@ metamask ropsten testnet account details:
 
 
 retrieve 1 test ether everyday from https://faucet.ropsten.be/
+
+
+
+### Current State of the Dapp
+#### Backend
+##### Ecogy Contract features (processes that occur on the blockchain itself):
+    - store project data
+    - store investor data
+    - create new project (only callable by contract creator)
+    - delete project (unstable, don't use this outside of VM or local dev chain)
+    - invest in project with ether
+    - sell project shares for ether
+    - update wattHours using oraclize
+    - calculate ROI from wattHours (currently callable once a month);
+    - send ROI to investors
+
+##### Next steps and Recommendations
+The solidity contracts are effectively finished in terms of functionality.
+
+To improve the flexibility and security of the contracts, consider using the OpenZeppelin library (https://github.com/OpenZeppelin/openzeppelin-solidity)
+This library contains interfaces and contracts to inherit from that allow utility such as:
+    - pausability
+    - ownability
+    - security features (e.g. reentrancy guard)
+    - resources to implement an ERC-20 token(s)
+    - crowdsale contracts
+for simple examples of how these are used and what advantages they can provide, see this project: https://github.com/shawntabrizi/Ethereum-Twitter-Bounty
+

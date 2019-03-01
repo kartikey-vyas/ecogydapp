@@ -7,6 +7,7 @@ App = {
 
   init: async () => {
     console.log("Loading Dapp...");
+    $(".loading").show();
     await App.initWeb3();
     await App.initContract();
     await App.initUI();
@@ -77,8 +78,8 @@ App = {
     const projectContainer = $("#project-container");
     const projectTemplate = $("#project-template");
     // get data from each project and copy it into the webpage
-    for (let i = App.lastProject; i < projectList.length; i++) {
-      let a = await App.ecogy.projectMap(i);
+    for (let i = 0; i < projectList.length; i++) {
+      let a = await App.ecogy.projectMap(projectList[i]);
       let b = await a;
       if (b[1]) {
         let project = await App.ecogy.getProject(projectList[i]);
@@ -88,12 +89,12 @@ App = {
           project,
           projectList[i]
         );
-        App.lastProject = i;
       } else {
         console.log(`project ${b[0]} has been deleted`);
       }
     }
     console.log("Projects retrieved");
+    $(".loading").hide();
     return App.bindEvents();
   },
 
@@ -109,6 +110,7 @@ App = {
   // implement invest function upon button click
   handleInvest: async event => {
     event.preventDefault();
+    $(".loading").show();
     // initialise required params
     let id = parseInt($(event.target).data("id"));
     let userAccounts = await web3.eth.getAccounts();
@@ -118,13 +120,13 @@ App = {
       .val();
     let cost = project[2] * numShares;
 
-    App.updateUI(id);
     // call solidity function
     await App.ecogy.invest(id, numShares, {
       from: userAccounts[0],
       value: cost
     });
     console.log('transacting to blockchain')
+    App.updateUI(id);
   },
 
   // implement sellShares function upon button click
@@ -145,6 +147,7 @@ App = {
 
   // implement create function upon button click
   handleCreate: async event => {
+    $(".loading").show();
     event.preventDefault();
 
     // initialise required params
@@ -171,7 +174,16 @@ App = {
     console.log('listening for events');
     // initialise contract and project variables
     let project = await App.ecogy.getProject(id);
+    let investEvent = await App.ecogy.InvestmentMade();
+
     // listen for InvestmentMade() which is emitted after an invest() transaction is completed
+    // EVENT LISTENER -- LOCAL TEST CHAIN
+    investEvent.watch(function (err, res) {
+      console.log(res);
+      // update only those fields which are changed by the transaction
+      App.refreshProject(id, project)
+    });
+    // EVENT LISTENER -- ROPSTEN INFURA NODE
     App.ecogyEvents.events.InvestmentMade(function (err, res) {
       if (!err) {
         console.log(res);
@@ -182,7 +194,7 @@ App = {
       console.log(event);
       // update only those fields which are changed by the transaction
       App.refreshProject(id, project)
-    })
+    });
 
     let latestBlock = await web3.eth.getBlockNumber();
     const createEvent = App.ecogy.ProjectCreated({
@@ -200,6 +212,7 @@ App = {
         id
       );
     });
+    $(".loading").hide()
   },
 
   refreshProject: async (id, project) => {

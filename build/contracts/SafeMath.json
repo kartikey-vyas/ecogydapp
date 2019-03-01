@@ -3283,12 +3283,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x2725adc82986B5C2F954B1625a0De69adf0861EB",
-      "transactionHash": "0xa5922073b4ce2b0800d0b6266701e159ecc1d72c59acd7071ba42c2e6101d20b"
+      "address": "0xbc880E061Aa5BF3e2C962a27a96591cc550A3D52",
+      "transactionHash": "0x5da2a5750e65960a5f721633c54c336a563d94f2d99cea7a6188753bc10ad86b"
     }
   },
   "schemaVersion": "3.0.2",
-  "updatedAt": "2019-02-28T03:20:03.291Z",
+  "updatedAt": "2019-03-01T01:16:34.513Z",
   "devdoc": {
     "details": "Unsigned math operations with safety checks that revert on error",
     "methods": {},
