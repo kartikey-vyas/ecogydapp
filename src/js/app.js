@@ -95,7 +95,7 @@ App = {
       }
     }
     console.log("Projects retrieved");
-    $("#loader").hide();
+    $(".loading").hide();
     return App.bindEvents();
   },
 
@@ -110,8 +110,8 @@ App = {
 
   // implement invest function upon button click
   handleInvest: async event => {
+    $(".loading").show();
     event.preventDefault();
-
     // initialise required params
     let id = parseInt($(event.target).data("id"));
     let userAccounts = await web3.eth.getAccounts();
@@ -126,7 +126,6 @@ App = {
       from: userAccounts[0],
       value: cost
     });
-    $("#loader").show();
     App.updateUI(id);
   },
 
@@ -173,13 +172,11 @@ App = {
   updateUI: async id => {
     // initialise contract and project variables
     let project = await App.ecogy.getProject(id);
-    const investEvent = App.ecogy.InvestmentMade({
-      fromBlock: 0,
-      toBlock: 'latest'
-    });
-
     // listen for InvestmentMade() which is emitted after an invest() transaction is completed
-    investEvent.watch(function (err, res) {
+    App.ecogyEvents.events.InvestmentMade(function (err, res) {
+      console.log(res);
+    }).on('data', (e) => {
+      console.log(e);
       // update only those fields which are changed by the transaction
       $("#" + id)
         .find(".form-control")
@@ -197,7 +194,7 @@ App = {
             "<li>" + project[3][j] + " (" + project[4][j] + " shares)</li>"
           );
       }
-    });
+    })
 
     let latestBlock = await web3.eth.getBlockNumber();
     const createEvent = App.ecogy.ProjectCreated({
@@ -215,7 +212,7 @@ App = {
         id
       );
     });
-    $("#loader").hide();
+    $(".loading").hide();
   },
 
   // generate projects on webpage

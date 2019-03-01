@@ -31,7 +31,7 @@ contract EcogyOracle is usingOraclize {
         if (oraclize_getPrice("URL") > address(this).balance) {
             emit NewOraclizeQuery("Oraclize query was NOT sent, please add some ETH to cover for the query fee");
         } else {
-            emit NewOraclizeQuery("Oraclize query was sent, waiting for a response");
+            emit NewOraclizeQuery("Oraclize query [update()] was sent, waiting for a response");
             oraclize_query("URL", "json(https://data.solarnetwork.net/solarquery/api/v1/pub/datum/mostRecent?nodeId=338).data.results[0].wattHours");
         }
     }
