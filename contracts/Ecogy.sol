@@ -65,17 +65,17 @@ contract Ecogy is EcogyOracle {
     constructor() public payable {
         ecogy = msg.sender;
         // demo projects
-        Project storage demo1 = projectMap[0];        
-        demo1.projectId = 0;
+        Project storage demo1 = projectMap[1];        
+        demo1.projectId = 1;
         demo1.available = true;
-        demo1.price = 2*10**17;
+        demo1.price = 2*10**16;
         demo1.availableShares = 100;
         projectList.push(demo1.projectId);
 
-        Project storage demo2 = projectMap[1];
-        demo2.projectId = 1;
+        Project storage demo2 = projectMap[2];
+        demo2.projectId = 2;
         demo2.available = true;
-        demo2.price = 1*10**17;
+        demo2.price = 1*10**16;
         demo2.availableShares = 100;
         projectList.push(demo2.projectId);
     }

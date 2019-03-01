@@ -1,4 +1,3 @@
-const Web3 = require("web3");
 App = {
   web3Provider: null,
   address: "0x12847Ed25DC3174eA860CBC76ec97D29c5FbB09B",
@@ -95,7 +94,6 @@ App = {
       }
     }
     console.log("Projects retrieved");
-    $(".loading").hide();
     return App.bindEvents();
   },
 
@@ -110,7 +108,6 @@ App = {
 
   // implement invest function upon button click
   handleInvest: async event => {
-    $(".loading").show();
     event.preventDefault();
     // initialise required params
     let id = parseInt($(event.target).data("id"));
@@ -121,12 +118,13 @@ App = {
       .val();
     let cost = project[2] * numShares;
 
+    App.updateUI(id);
     // call solidity function
     await App.ecogy.invest(id, numShares, {
       from: userAccounts[0],
       value: cost
     });
-    App.updateUI(id);
+    console.log('transacting to blockchain')
   },
 
   // implement sellShares function upon button click
@@ -170,30 +168,20 @@ App = {
 
   // refresh UI elements that were modified by transaction
   updateUI: async id => {
+    console.log('listening for events');
     // initialise contract and project variables
     let project = await App.ecogy.getProject(id);
     // listen for InvestmentMade() which is emitted after an invest() transaction is completed
     App.ecogyEvents.events.InvestmentMade(function (err, res) {
-      console.log(res);
-    }).on('data', (e) => {
-      console.log(e);
-      // update only those fields which are changed by the transaction
-      $("#" + id)
-        .find(".form-control")
-        .val("");
-      $("#" + id)
-        .find(".available-shares")
-        .text(project[5]);
-      $("#" + id)
-        .find(".investors")
-        .empty();
-      for (var j = 0; j < project[3].length; j++) {
-        $("#" + id)
-          .find(".investors")
-          .append(
-            "<li>" + project[3][j] + " (" + project[4][j] + " shares)</li>"
-          );
+      if (!err) {
+        console.log(res);
+      } else {
+        console.log(err)
       }
+    }).on('data', (event) => {
+      console.log(event);
+      // update only those fields which are changed by the transaction
+      App.refreshProject(id, project)
     })
 
     let latestBlock = await web3.eth.getBlockNumber();
@@ -212,7 +200,25 @@ App = {
         id
       );
     });
-    $(".loading").hide();
+  },
+
+  refreshProject: async (id, project) => {
+    $("#" + id)
+      .find(".form-control")
+      .val("");
+    $("#" + id)
+      .find(".available-shares")
+      .text(project[5]);
+    $("#" + id)
+      .find(".investors")
+      .empty();
+    for (var j = 0; j < project[3].length; j++) {
+      $("#" + id)
+        .find(".investors")
+        .append(
+          "<li>" + project[3][j] + " (" + project[4][j] + " shares)</li>"
+        );
+    }
   },
 
   // generate projects on webpage
