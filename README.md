@@ -1,6 +1,6 @@
 # Ecogy Dapp
 
-As of Tuesday, 26 February 2019, the final version of the Ecogy Dapp code will be backed up here. The original repository for all the code used in development can be found at:
+As of Tuesday, 26 February 2019, the final version of the Ecogy Dapp code will be backed up here. The original repository for all the code used in development can be found at: PRIVATE
     https://github.com/kartikey-vyas/ecogy-smart-contract
 
 In this repo, I have made sure to use the latest versions of solidity, truffle and any associated packages or frameworks required for the dapp.
@@ -92,12 +92,14 @@ pull in details about each project
 
 ## How to set up a test environment (local)
 
-1. make sure you have these things installed globally
+1. make sure you have these things installed
 
-    npm install -g truffle
-    npm install -g ganache
-    npm install -g lite-server
-    npm install -g ethereum-bridge
+    ```
+    truffle
+    ganache
+    lite-server
+    ethereum-bridge
+    ```
 
 2. launch ethereum bridge
 
